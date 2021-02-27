@@ -1,0 +1,35 @@
+{% extends 'myapp/base.html' %}
+
+{% block content %}
+<!-- End your project here-->
+<div class="row row-cols-1 row-cols-md-3 g-4">
+  {% for item in post_list %}
+  <div class="card">
+    {% if item.thumbnail %}
+    <a href="{% url 'myapp:post_detail' item.id %}">
+    <img
+      src="{{ item.thumbnail.medium.url }}"
+      class="card-img-top"
+      alt="{{ item.title }}"
+    /></a>
+    {% else %}
+    <img
+      src="https://mdbootstrap.com/img/new/standard/nature/184.jpg"
+      class="card-img-top"
+      alt="{{ item.title }}"
+    />
+    {% endif %}
+    
+    <div class="card-body">
+      <h5 class="card-title">{{item.title}}<small>{{ item.author }}|{{item.created_at}}</small></h5>
+      <p>{{ item.category }}</p>
+      <p class="card-text">
+        {{item.content|safe|truncatechars:12}}
+      </p>
+      <a href="{% url 'myapp:post_detail' item.id %}" class="btn btn-primary">もっと読む</a>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}
